@@ -10,9 +10,6 @@ import Seasons from './pages/seasons';
 import About from './pages/About';
 import Search from "./components/search";
 
-import { onAuthStateChanged } from 'firebase/auth';
-// import { auth, db } from './firebase';
-import { doc, onSnapshot } from 'firebase/firestore';
 
 
 function App() {
