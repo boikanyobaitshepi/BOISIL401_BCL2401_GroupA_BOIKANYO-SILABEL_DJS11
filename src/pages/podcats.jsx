@@ -51,7 +51,7 @@ const formatUpdatedAt = (dateString) => {
     setFilter(selectedFilter);
   };
 
-//   const sortShows = (a, b) => {
+  const sortShows = (a, b) => {
     if (filter === 'A-Z') {
       return a.title.localeCompare(b.title);
     } else if (filter === 'Z-A') {
