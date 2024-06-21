@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import Search from "./Search";
-import Login from "./Pages/Login";
+import Search from "../search";
+import Login from "../Pages/Login";
 
 
 export default function NavBar() {

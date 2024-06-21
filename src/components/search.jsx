@@ -1,6 +1,6 @@
 import React from "react";
 
-import SearchResults from "./SearchResults";
+import SearchResults from "./searchresults";
 
 function Search() {
   const [searchTerm, setSearchTerm] = React.useState("");
