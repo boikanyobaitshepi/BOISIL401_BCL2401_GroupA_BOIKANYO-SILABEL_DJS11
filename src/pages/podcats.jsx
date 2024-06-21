@@ -24,7 +24,7 @@ const formatUpdatedAt = (dateString) => {
 
 
 
-// const Podcasts = () => {
+const Podcasts = () => {
   const [searchParams] = useSearchParams()
   const [shows, setShows] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
