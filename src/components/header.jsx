@@ -54,18 +54,7 @@ export default function Header() {
         
         <Search />
         
-        <Link
-          to="/login"
-          className="btn btn-outline-dark ms-2 text-secondary fw-bold mb-2 mt-1"
-        >
-          Login
-        </Link>
-        <Link
-          to="/signOut"
-          className="btn btn-outline-dark ms-2 text-secondary fw-bold mb-2 mt-1"
-        >
-          Sign Out
-        </Link>
+       
       </nav>
       <main>
         <Outlet />
