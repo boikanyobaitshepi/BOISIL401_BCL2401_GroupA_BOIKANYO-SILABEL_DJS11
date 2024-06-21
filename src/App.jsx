@@ -4,7 +4,11 @@ import PodcastList from './pages/podcastlist';
 import PodcastDetail from './pages/podcastdetails';
 // import Header from './components/Header'
 import Layout from './components/Layout';
-// import Preview from './pages/preview'; // Uncomment if you have a Preview component
+import NavBar from './components/NavBar';
+import About from './pages/About';
+import Search from './components/search';
+import Seasons from './pages/seasons';
+
 
 function App() {
   return (
