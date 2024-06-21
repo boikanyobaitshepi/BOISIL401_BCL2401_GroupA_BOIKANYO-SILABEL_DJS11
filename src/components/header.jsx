@@ -1,42 +1,83 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import logo from '../image/Logo.png'; // Correctly import your logo image
-// import Search from "../Search";
+import { Outlet, Link } from "react-router-dom";
+import Search from "../components/search"; // Ensure correct import path
+import Login from "../pages/login";
+import logo from '../image/Logo.png'; // Adjusted to typical filename conventions
 
 export default function Header() {
-  const activeStyles = {
-    fontWeight: "bold",
-    textDecoration: "underline",
-    color: "black"
-  };
-
-  
-
   return (
-    <header className="header" style={{display: "flex"}}>
-      <Link className="site-logo" to="/">
+    <header className="bg-dark p-1 border border-secondary border-2">
+         <Link className="site-logo" to="/">
         <img src={logo} alt="Site Logo" style={{ width: '160px', height: '150px', margin: 'Left'}} />
       </Link>
-      <nav>
-       {/* <button> Search show</button> */}
-      {/* <Search shows={shows} onSearch={handleSearch} /> */}
-
-
-       <NavLink
+      <nav className="nav nav-pills flex-row P-1 mt-2">
+        
+        <Link
           to="/"
-          style={({ isActive }) => (isActive ? activeStyles : null)}
+          className="flex-sm-fill text-sm-center nav-link fw-bold text-light"
+          aria-current="page"
         >
-          favourate❤️
-        </NavLink>
-        <NavLink
+          Home
+        </Link>
+        <a
+          className="flex-sm-fill text-sm-center nav-link dropdown-toggle text-light fw-bold"
+          data-bs-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-expanded="false"
+        >
+          Genres
+        </a>
+        <ul className="dropdown-menu" data-bs-theme="dark">
+          {/* Dropdown menu items */}
+        </ul>
+        <Link
+          to="/podcasts"
+          className="flex-sm-fill text-sm-center nav-link text-light fw-bold"
+        >
+          Podcasts
+        </Link>
+        <Link
           to="/about"
-          style={({ isActive }) => (isActive ? activeStyles : null)}
+          className="flex-sm-fill text-sm-center nav-link text-light fw-bold"
         >
           About
-        </NavLink>
+        </Link>
         
+        <Link
+          to="/fav"
+          className="flex-sm-fill text-sm-center nav-link text-light fw-bold"
+        >
+          <img src="https://www.flaticon.com/free-icons/star" alt="pic" width="15" height="15" /> Favorites
+        </Link>
+        
+        <Search /> {/* Ensure Search component is correctly used */}
+        
+        <Link
+          to="/login"
+          className="btn btn-outline-dark ms-2 text-secondary fw-bold mb-2 mt-1"
+        >
+          Login
+        </Link>
+        <Link
+          to="/signOut"
+          className="btn btn-outline-dark ms-2 text-secondary fw-bold mb-2 mt-1"
+        >
+          Sign Out
+        </Link>
       </nav>
-     
+      <main>
+        <Outlet />
+      </main>
     </header>
   );
 }
+
+
+
+  
+
+  
+
+
+    
