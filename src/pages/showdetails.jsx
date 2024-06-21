@@ -58,7 +58,7 @@ function ShowDetails() {
           </div>
 
         ) : (
-        //   <h2 className=''>Podcast not found.</h2>
+          <h2 className=''>Podcast not found.</h2>
         )}
       </div>
       
