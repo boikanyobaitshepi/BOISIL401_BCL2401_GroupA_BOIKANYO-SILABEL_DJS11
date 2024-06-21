@@ -18,9 +18,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />} >
           <Route index element={<PodcastList />} />
-          <Route path='podcasts/:id' element={<PodcastDetail />} />
-          <Route path='about' element={<About />} />
-          <Route path='podcast' element={<PodcastList />}/>
+          <Route path='/podcasts/:id' element={<PodcastDetail />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/podcast' element={<Podcast />}/>
         </Route>
       </Routes>
     </BrowserRouter>
