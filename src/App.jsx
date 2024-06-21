@@ -27,8 +27,6 @@ function App() {
           <Route path='podcasts/:id' element={<PodcastDetail />} />
           <Route path='about' element={<About />} />
           <Route path='podcast' element={<PodcastList />}/>
-          <Route path='login' element={<Login />} />
-          {/* <Route path='signOut' element={<SignOut />} />   */}
         </Route>
       </Routes>
     </BrowserRouter>
