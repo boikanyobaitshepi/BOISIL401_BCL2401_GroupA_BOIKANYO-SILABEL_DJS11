@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import Search from "../components/search"; // Ensure correct import path
-import Login from "../pages/login";
+// import Login from "../pages/login";
 import logo from '../image/Logo.png'; // Adjusted to typical filename conventions
 
 export default function Header() {
@@ -32,11 +32,12 @@ export default function Header() {
           {/* Dropdown menu items */}
         </ul>
         <Link
-          to="/podcasts"
-          className="flex-sm-fill text-sm-center nav-link text-light fw-bold"
-        >
-          Podcasts
-        </Link>
+  to="/podcast"
+  className="flex-sm-fill text-sm-center nav-link text-light fw-bold"
+>
+  Podcasts
+</Link>
+
         <Link
           to="/about"
           className="flex-sm-fill text-sm-center nav-link text-light fw-bold"
@@ -48,10 +49,10 @@ export default function Header() {
           to="/fav"
           className="flex-sm-fill text-sm-center nav-link text-light fw-bold"
         >
-          <img src="https://www.flaticon.com/free-icons/star" alt="pic" width="15" height="15" /> Favorites
+
         </Link>
         
-        <Search /> {/* Ensure Search component is correctly used */}
+        <Search />
         
         <Link
           to="/login"

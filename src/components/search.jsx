@@ -28,7 +28,7 @@ function Search() {
             type="button"
             onClick={handleSearchButtonClick} // Handle the search action when the search button is clicked
           >
-            Search
+            🔎
           </button>
         </form>
       </div>
