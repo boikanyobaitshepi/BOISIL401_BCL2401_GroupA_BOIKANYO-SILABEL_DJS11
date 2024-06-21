@@ -7,7 +7,7 @@ function ShowDetails() {
 
   const params = useParams();
 
-//   React.useEffect(() => {
+  React.useEffect(() => {
     fetch(`https://podcast-api.netlify.app/id/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
