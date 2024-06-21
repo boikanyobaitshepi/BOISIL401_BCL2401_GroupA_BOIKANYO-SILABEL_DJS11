@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-function ShowDetails() {
+function PodCastDetails() {
   const [podcast, setPodcast] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
@@ -67,4 +67,4 @@ function ShowDetails() {
   );
 }
 
-export default ShowDetails;
+export default PodCastDetails;

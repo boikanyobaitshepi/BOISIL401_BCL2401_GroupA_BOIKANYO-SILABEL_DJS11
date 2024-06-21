@@ -1,34 +1,39 @@
 import React from 'react';
 
+const PodcatList = (props) => {
+  const [showAll, setShowAll] = React.useState(false);
+  const toggleShowAll = () => {
+    setShowAll((prevShowAll) => !prevShowAll);
+  };
 
-const ShowList = (props) => {
-    const [showAll, setShowAll] = React.useState(false);
-    const toggleShowAll = () => {
-        setShowAll((prevShowAll) => !prevShowAll);
-      };
-      const showsToDisplay = showAll ? props.shows : props.shows.slice(0, 8);
-      const hasMoreShows = props.shows.length > showsToDisplay.length;
-      const genreMapping = {
-        1: "Personal Growth",
-        2: "True Crime and Investigative Journalism",
-        3: "History",
-        4: "Comedy",
-        5: "Entertainment",
-        6: "Business",
-        7: "Fiction",
-        8: "News",
-        9: "Kids and Family",
-      };
-      const formatUpdatedAt = (dateString) => {
-        const date = new Date(dateString);
-        const formattedDate = date.toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
-        return formattedDate;
-      };
-      
+  // Ensure props.shows is defined and is an array
+  const shows = Array.isArray(props.shows) ? props.shows : [];
+
+  const showsToDisplay = showAll ? shows : shows.slice(0, 8);
+  const hasMoreShows = shows.length > showsToDisplay.length;
+
+  const genreMapping = {
+    1: "Personal Growth",
+    2: "True Crime and Investigative Journalism",
+    3: "History",
+    4: "Comedy",
+    5: "Entertainment",
+    6: "Business",
+    7: "Fiction",
+    8: "News",
+    9: "Kids and Family",
+  };
+
+  const formatUpdatedAt = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    return formattedDate;
+  };
+
   return (
     <div className="container border border-secondary  border-2 rounded ">
       <h2>All Shows</h2>
@@ -50,18 +55,15 @@ const ShowList = (props) => {
           </div>
         ))}
       </div>
-      {hasMoreShows && props.shows.length > 8 && (
+      {hasMoreShows && shows.length > 8 && (
         <div className='d-grid  p-4' >
-        <button className="btn btn-secondary " type="button" onClick={toggleShowAll}>
-          Show More
-        </button>
+          <button className="btn btn-secondary " type="button" onClick={toggleShowAll}>
+            Show More
+          </button>
         </div>
       )}
     </div>
-    
   );
 };
 
-export default ShowList;
-
-
+export default PodcatList;
