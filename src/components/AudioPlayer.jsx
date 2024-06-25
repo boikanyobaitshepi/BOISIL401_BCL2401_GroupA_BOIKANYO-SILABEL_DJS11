@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 function Audio() {
@@ -8,7 +8,7 @@ function Audio() {
 
   const params = useParams();
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(`https://podcast-api.netlify.app/id/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -21,26 +21,35 @@ function Audio() {
       });
   }, [params.id]);
 
+  const handlePlay = (sound) => {
+    setCurrentlyPlaying(sound);
+  };
+
   return (
     <div>
       {loading ? (
         <div>Loading...</div>
       ) : (
         <div>
-          {season.seasons.map((show) => (
-            <div key={show.id}>
-              {show.episodes.map((sound) => (
-                <div key={sound.id}>
-                  <h3>{sound.title}</h3>
-                  <audio
-                    src={sound.file}
-                    controls
-                    autoPlay={sound === currentlyPlaying}
-                  ></audio>
-                </div>
-              ))}
-            </div>
-          ))}
+          {season.seasons && season.seasons.length > 0 ? (
+            season.seasons.map((show) => (
+              <div key={show.id}>
+                {show.episodes.map((sound) => (
+                  <div key={sound.id}>
+                    <h3>{sound.title}</h3>
+                    <audio
+                      src={sound.file}
+                      controls
+                      onPlay={() => handlePlay(sound)}
+                      autoPlay={sound === currentlyPlaying}
+                    ></audio>
+                  </div>
+                ))}
+              </div>
+            ))
+          ) : (
+            <div>No seasons available</div>
+          )}
         </div>
       )}
     </div>

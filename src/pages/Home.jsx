@@ -1,5 +1,4 @@
 import React from 'react';
-import ShowList from './ShowList';
 import Header from '../Header'
 import RandomImageCarousel from '../Carousel'
 

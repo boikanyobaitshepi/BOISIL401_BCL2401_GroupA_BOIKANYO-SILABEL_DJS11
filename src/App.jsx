@@ -1,30 +1,27 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PodcastList from './pages/podcastlist';
-import PodcastDetail from './pages/podcastdetails';
-import Podcast from './pages/podcast';
-
+import Navbar from './components/NavBar';
+import PodcastDetail from './pages/PodcastDetail';
+import Podcasts from './pages/Podcasts';
 import Layout from './components/Layout';
-
-import Seasons from './pages/seasons';
 import About from './pages/About';
-import Search from "./components/search";
-
 
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path='/' element={<Layout />} >
-          <Route index element={<PodcastList />} />
-          <Route path='/podcasts/:id' element={<PodcastDetail />} />
+          <Route index element={<Podcasts />} />
+          <Route path='show/:id' element={<PodcastDetail />} />
           <Route path='/about' element={<About />} />
-          <Route path='/podcast' element={<Podcast />}/>
+          <Route path='podcasts/:id' element={<PodcastDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
+
 
 export default App;

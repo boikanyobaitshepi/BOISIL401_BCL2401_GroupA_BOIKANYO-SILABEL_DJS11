@@ -1,16 +1,18 @@
-import React from "react"
-import { Outlet } from "react-router-dom"
-import Header from "./header"
-import Footer from "./footer"
+// src/components/Layout.jsx
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-export default function Layout() {
-    return (
-        <div className="site-wrapper">
-            <Header />
-            <main>
-                <Outlet />
-            </main>
-            <Footer />
-        </div>
-    )
-}
+const Layout = () => {
+  return (
+    <div>
+      <header className="bg-dark text-white p-3">
+        <h1>Podcast App</h1>
+      </header>
+      <main className="container mt-4">
+        <Outlet />
+      </main>
+    </div>
+  );
+};
+
+export default Layout;

@@ -13,7 +13,7 @@ body {
   }
 .nav{
   background-color: #333;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,9 +49,14 @@ body {
   
   /* Text */
   .card-img-top {
-    height: 200px; /* Adjust height as needed */
+    height: 150px; /* Adjust height as needed */
     object-fit: cover;
+    border-radius: 10px 10px 0 0; /* Rounded corners */
+    margin-left: 0px;
+    margin-right: 0px;
   }
+
+
   
   .card-title {
     font-weight: bold;
@@ -68,5 +73,11 @@ body {
     border: none;
 
     /* Optional: Add styles for list items */
+  }
+
+  .genre {
+    font-size: 0.8rem;
+    color: #999;
+
   }
   
