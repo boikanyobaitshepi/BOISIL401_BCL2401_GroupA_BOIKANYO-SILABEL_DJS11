@@ -6,20 +6,21 @@ const Podcasts = () => {
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('A-Z'); // Default filter set to A-Z
+  const [searchQuery, setSearchQuery] = useState('');
 
   const genresFilter = parseInt(searchParams.get("genres"));
 
   const genreMapping = {
-  1: "Personal Growth🍃",
-  2: "True Crime and Investigative Journalism🔎",
-  3: "History📜",
-  4: "Comedy😂",
-  5: "Entertainment🎥🍿",
-  6: "Business📈",
-  7: "Fiction☕",
-  8: "News📰",
-  9: "Kids and Family👨‍👩‍👧‍👧",
-
+    1: "Personal Growth🍃",
+    2: "True Crime and Investigative Journalism🔎",
+    3: "History📜",
+    4: "Comedy😂",
+    5: "Entertainment🎥🍿",
+    6: "Business📈",
+    7: "Fiction☕",
+    8: "News📰",
+    9: "Kids and Family👨‍👩‍👧‍👧",
+  
   };
 
   useEffect(() => {
@@ -40,6 +41,10 @@ const Podcasts = () => {
     setFilter(event.target.value);
   };
 
+  const handleSearch = () => {
+    setFilter('A-Z'); // Reset filter to default when a search is performed
+  };
+
   const sortShows = (a, b) => {
     if (filter === 'A-Z') {
       return a.title.localeCompare(b.title);
@@ -53,12 +58,14 @@ const Podcasts = () => {
     return 0;
   };
 
-  const filteredShows = shows.slice().sort(sortShows);
-
   const formatUpdatedAt = (updated) => {
     const date = new Date(updated);
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   };
+
+  const filteredShows = shows
+    .filter(show => show.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    .sort(sortShows);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -66,6 +73,16 @@ const Podcasts = () => {
 
   return (
     <div>
+      <div className="d-flex mb-3">
+        <input
+          type="text"
+          placeholder="Search podcasts"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="form-control me-2"
+        />
+        <button onClick={handleSearch} className="btn btn-primary">Search</button>
+      </div>
       <label htmlFor="filter">Sort by:</label>
       <select id="filter" value={filter} onChange={handleFilterChange}>
         <option value="A-Z">A-Z</option>
