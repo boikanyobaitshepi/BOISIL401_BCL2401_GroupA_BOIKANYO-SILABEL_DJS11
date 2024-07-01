@@ -1,27 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-
-const genreMapping = {
-  1: "Personal Growth🍃",
-  2: "True Crime and Investigative Journalism🔎",
-  3: "History📜",
-  4: "Comedy😂",
-  5: "Entertainment🎥🍿",
-  6: "Business📈",
-  7: "Fiction☕",
-  8: "News📰",
-  9: "Kids and Family👨‍👩‍👧‍👧",
-};
-
-const formatUpdatedAt = (dateString) => {
-  const date = new Date(dateString);
-  const formattedDate = date.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  return formattedDate;
-};
+import { useSearchParams, Link } from 'react-router-dom';
 
 const Podcasts = () => {
   const [searchParams] = useSearchParams();
@@ -31,7 +9,21 @@ const Podcasts = () => {
 
   const genresFilter = parseInt(searchParams.get("genres"));
 
+  const genreMapping = {
+  1: "Personal Growth🍃",
+  2: "True Crime and Investigative Journalism🔎",
+  3: "History📜",
+  4: "Comedy😂",
+  5: "Entertainment🎥🍿",
+  6: "Business📈",
+  7: "Fiction☕",
+  8: "News📰",
+  9: "Kids and Family👨‍👩‍👧‍👧",
+
+  };
+
   useEffect(() => {
+    setLoading(true); // Set loading to true when fetching new data
     fetch('https://podcast-api.netlify.app/shows')
       .then((response) => response.json())
       .then((data) => {
@@ -44,8 +36,8 @@ const Podcasts = () => {
       });
   }, [genresFilter]);
 
-  const handleFilterChange = (selectedFilter) => {
-    setFilter(selectedFilter);
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
   };
 
   const sortShows = (a, b) => {
@@ -61,58 +53,50 @@ const Podcasts = () => {
     return 0;
   };
 
-  const displayedShows = genresFilter
-    ? shows.filter(show => show.genres.includes(genresFilter))
-    : shows;
+  const filteredShows = shows.slice().sort(sortShows);
+
+  const formatUpdatedAt = (updated) => {
+    const date = new Date(updated);
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className='bg-dark mt-4'>
-      <div className="container">
-        <h2>All Shows</h2>
-        <div className="row mb-3">
-          <div className="col p-1">
-            <div className="btn-group me">
-              <button type="button" className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort By: {filter}
-              </button>
-              <div className="dropdown-menu">
-                <button className="dropdown-item" type="button" onClick={() => handleFilterChange('A-Z')}>A-Z</button>
-                <button className="dropdown-item" type="button" onClick={() => handleFilterChange('Z-A')}>Z-A</button>
-                <button className="dropdown-item" type="button" onClick={() => handleFilterChange('ascending')}>Ascending Order</button>
-                <button className="dropdown-item" type="button" onClick={() => handleFilterChange('descending')}>Descending Order</button>
-              </div>
-              <div className="ms-2">
-                {Object.keys(genreMapping).map(key => (
-                  <Link key={key} to={`?genres=${key}`} className="btn btn-outline-secondary rounded-pill me-2">{genreMapping[key]}</Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row p-3 border border-secondary border-2 rounded">
-          {displayedShows.sort(sortShows).map((show) => (
-            <div key={show.id} className="col-md-3 mb-4">
-              <Link className="link-underline link-underline-opacity-0" to={`/podcasts/${show.id}`}>
-                <div className="card p-3" style={{ width: '18rem' }}>
-                  <img src={show.image} alt={show.title} className="card-img-top" />
-                  <div className="card-body">
-                    <h5 className="card-title fw-bold">{show.title}</h5>
-                    <p className="card-text fw-semibold">{show.description.length > 100 ? show.description.slice(0, 100) + '...' : show.description}</p>
-                  </div>
-                  <ul className="list-group list-group-flush bg-dark">
-                    <li className="list-group-item">Seasons: {show.seasons}</li>
-                    <li className="list-group-item">Last Updated: {formatUpdatedAt(show.updated)}</li>
-                    <li className="list-group-item">Genres: {show.genres.map(genreId => genreMapping[genreId]).join(', ')} <img className='ms-3' src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="" width="18px" height="18px" /></li>
-                  </ul>
+    <div>
+      <label htmlFor="filter">Sort by:</label>
+      <select id="filter" value={filter} onChange={handleFilterChange}>
+        <option value="A-Z">A-Z</option>
+        <option value="Z-A">Z-A</option>
+        <option value="ascending">Date Ascending</option>
+        <option value="descending">Date Descending</option>
+      </select>
+      <div className="ms-2">
+        {Object.keys(genreMapping).map(key => (
+          <Link key={key} to={`?genres=${key}`} className="btn btn-outline-secondary rounded-pill me-2">{genreMapping[key]}</Link>
+        ))}
+      </div>
+      <div className="row p-3 border border-secondary border-2 rounded">
+        {filteredShows.map((show) => (
+          <div key={show.id} className="col-md-3 mb-4">
+            <Link className="link-underline link-underline-opacity-0" to={`/podcasts/${show.id}`}>
+              <div className="card p-3" style={{ width: '18rem' }}>
+                <img src={show.image} alt={show.title} className="card-img-top" />
+                <div className="card-body">
+                  <h5 className="card-title fw-bold">{show.title}</h5>
+                  <p className="card-text fw-semibold">{show.description.length > 100 ? show.description.slice(0, 100) + '...' : show.description}</p>
                 </div>
-              </Link>
-            </div>
-          ))}
-        </div>
+                <ul className="list-group list-group-flush bg-dark">
+                  <li className="list-group-item">Seasons: {show.seasons}</li>
+                  <li className="list-group-item">Last Updated: {formatUpdatedAt(show.updated)}</li>
+                  <li className="list-group-item">Genres: {show.genres.map(genreId => genreMapping[genreId]).join(', ')} <img className='ms-3' src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="" width="18px" height="18px" /></li>
+                </ul>
+              </div>
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
