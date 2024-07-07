@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import './Seasons.css';
+// import './Seasons.css';
 
 const Seasons = () => {
   const { id } = useParams();
@@ -11,7 +11,7 @@ const Seasons = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://podcast-api.netlify.app/id/${id}`);
+      fetch(`https://podcast-api.netlify.app/id/${id}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -61,7 +61,7 @@ const Seasons = () => {
       {podcast.seasons.map(season => (
         <div key={season.seasonNumber} className="season">
           <h2 onClick={() => toggleSeason(season.seasonNumber)} className="season-title">
-            {season.title}
+            {season.title || `Season ${season.seasonNumber}`}
           </h2>
           {seasonsVisibility[season.seasonNumber] && (
             <div className="season-content">
