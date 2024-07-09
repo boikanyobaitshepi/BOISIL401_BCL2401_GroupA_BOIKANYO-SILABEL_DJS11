@@ -1,6 +1,8 @@
+// Seasons.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-// import './Seasons.css';
+import Episodes from './Episodes';
+import './Seasons.css';
 
 const Seasons = () => {
   const { id } = useParams();
@@ -11,7 +13,7 @@ const Seasons = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-      fetch(`https://podcast-api.netlify.app/id/${id}`);
+        const response = await fetch(`https://podcast-api.netlify.app/id/${id}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -61,25 +63,14 @@ const Seasons = () => {
       {podcast.seasons.map(season => (
         <div key={season.seasonNumber} className="season">
           <h2 onClick={() => toggleSeason(season.seasonNumber)} className="season-title">
-            {season.title || `Season ${season.seasonNumber}`}
+            {season.title}
           </h2>
           {seasonsVisibility[season.seasonNumber] && (
             <div className="season-content">
               {season.image && (
                 <img src={season.image} alt={`Season ${season.seasonNumber}`} className="season-image" />
               )}
-              <div className="episodes">
-                {season.episodes.map(episode => (
-                  <div key={episode.title} className="episode">
-                    <h3>{episode.title}</h3>
-                    <audio controls className="audio-player">
-                      <source src={episode.file} type="audio/mpeg" />
-                      Your browser does not support the audio element.
-                    </audio>
-                    <p>{episode.description}</p>
-                  </div>
-                ))}
-              </div>
+              <Episodes episodes={season.episodes} />
             </div>
           )}
         </div>

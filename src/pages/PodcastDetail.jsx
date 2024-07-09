@@ -1,47 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Episodes from '../components/Episodes';
 
-const PodcastDetail = () => {
+const PodcastDetails = ({ addFavorite, removeFavorite, favorites }) => {
   const { id } = useParams();
   const [podcast, setPodcast] = useState(null);
+  const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://podcast-api.netlify.app/id/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
+    const fetchPodcastDetails = async () => {
+      try {
+        const response = await fetch(`https://podcast-api.netlify.app/id/${id}`);
+        const data = await response.json();
         setPodcast(data);
+        const episodesResponse = await fetch(`https://podcast-api.netlify.app/id/${id}/episodes`);
+        const episodesData = await episodesResponse.json();
+        setEpisodes(episodesData);
+      } catch (error) {
+        console.error('Error fetching podcast details or episodes:', error);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error('There was a problem with the fetch operation:', error);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchPodcastDetails();
   }, [id]);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  const isFavorite = favorites.some(fav => fav.id === id);
 
-  if (!podcast) {
-    return <p>Podcast not found.</p>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (!podcast) return <div>Podcast not found</div>;
 
   return (
-    <div className="card">
-      <img src={podcast.image} alt={podcast.title} className="card-img-top" />
-      <div className="card-body">
-        <h5 className="card-title">{podcast.title}</h5>
-        <p className="card-text">{podcast.description}</p>
-        <Link to={`/podcasts/${podcast.id}`}>Podcast Details</Link>
-      </div>
+    <div>
+      <h1>{podcast.title}</h1>
+      <img src={podcast.image} alt={podcast.title} />
+      <p>{podcast.description}</p>
+      <button onClick={() => isFavorite ? removeFavorite(id) : addFavorite(podcast)}>
+        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+      </button>
+      <Episodes episodes={episodes} />
     </div>
   );
 };
 
-export default PodcastDetail;
+export default PodcastDetails;
