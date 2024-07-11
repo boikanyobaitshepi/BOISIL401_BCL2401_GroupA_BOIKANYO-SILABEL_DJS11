@@ -1,11 +1,12 @@
+// PodcastDetails.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Episodes from '../components/Episodes';
+import { useFavorites } from '../FavoritesContext';
 
-const PodcastDetails = ({ addFavorite, removeFavorite, favorites }) => {
+const PodcastDetails = () => {
   const { id } = useParams();
   const [podcast, setPodcast] = useState(null);
-  const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,11 +15,9 @@ const PodcastDetails = ({ addFavorite, removeFavorite, favorites }) => {
         const response = await fetch(`https://podcast-api.netlify.app/id/${id}`);
         const data = await response.json();
         setPodcast(data);
-        const episodesResponse = await fetch(`https://podcast-api.netlify.app/id/${id}/episodes`);
-        const episodesData = await episodesResponse.json();
-        setEpisodes(episodesData);
+        console.log(data);
       } catch (error) {
-        console.error('Error fetching podcast details or episodes:', error);
+        console.error('Error fetching podcast details:', error);
       } finally {
         setLoading(false);
       }
@@ -26,8 +25,6 @@ const PodcastDetails = ({ addFavorite, removeFavorite, favorites }) => {
 
     fetchPodcastDetails();
   }, [id]);
-
-  const isFavorite = favorites.some(fav => fav.id === id);
 
   if (loading) return <div>Loading...</div>;
   if (!podcast) return <div>Podcast not found</div>;
@@ -37,10 +34,13 @@ const PodcastDetails = ({ addFavorite, removeFavorite, favorites }) => {
       <h1>{podcast.title}</h1>
       <img src={podcast.image} alt={podcast.title} />
       <p>{podcast.description}</p>
-      <button onClick={() => isFavorite ? removeFavorite(id) : addFavorite(podcast)}>
-        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-      </button>
-      <Episodes episodes={episodes} />
+      
+      {podcast.seasons.map((season) => (
+        <div key={season.season}>
+          <h2>{season.title}</h2>
+          <Episodes episodes={season.episodes} />
+        </div>
+      ))}
     </div>
   );
 };

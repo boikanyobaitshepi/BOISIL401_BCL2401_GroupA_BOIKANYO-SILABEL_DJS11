@@ -107,6 +107,7 @@ const Podcasts = () => {
                 </div>
                 <ul className="list-group list-group-flush bg-dark">
                   <li className="list-group-item">Seasons: {show.seasons}</li>
+                  {/* <li className="list-group-item">Episode: {show.seasons}</li> */}
                   <li className="list-group-item">Last Updated: {formatUpdatedAt(show.updated)}</li>
                   <li className="list-group-item">Genres: {show.genres.map(genreId => genreMapping[genreId]).join(', ')} <img className='ms-3' src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="" width="18px" height="18px" /></li>
                 </ul>
