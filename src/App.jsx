@@ -17,7 +17,8 @@ function App() {
           <Route index element={<Podcasts />} />
           <Route path='podcasts/:id' element={<PodcastDetails />} />
           <Route path='/about' element={<About />} />
-        <Route path="/favorites" element={<Favorites/>} />
+        {/* <Route path="/favorites" element={<Favorites/>} /> */}
+        <Route path="/favorites" component={Favorites} />
         </Route>
       </Routes>
     </BrowserRouter>

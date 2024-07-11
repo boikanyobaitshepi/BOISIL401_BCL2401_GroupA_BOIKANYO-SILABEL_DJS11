@@ -8,6 +8,7 @@ const PodcastDetails = () => {
   const { id } = useParams();
   const [podcast, setPodcast] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
   useEffect(() => {
     const fetchPodcastDetails = async () => {
@@ -26,6 +27,18 @@ const PodcastDetails = () => {
     fetchPodcastDetails();
   }, [id]);
 
+  const handleFavoriteToggle = () => {
+    if (isFavorite(id)) {
+      removeFavorite(id);
+    } else {
+      addFavorite({
+        id: podcast.id,
+        title: podcast.title,
+        image: podcast.image,
+      });
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
   if (!podcast) return <div>Podcast not found</div>;
 
@@ -33,6 +46,9 @@ const PodcastDetails = () => {
     <div>
       <h1>{podcast.title}</h1>
       <img src={podcast.image} alt={podcast.title} />
+      <button onClick={handleFavoriteToggle}>
+        {isFavorite(id) ? 'Remove from Favorites' : 'Add to Favorites'}
+      </button>
       <p>{podcast.description}</p>
       
       {podcast.seasons.map((season) => (
