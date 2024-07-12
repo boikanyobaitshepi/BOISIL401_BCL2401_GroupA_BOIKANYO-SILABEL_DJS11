@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Episodes from '../components/Episodes';
-import { useFavorites } from '../FavoritesContext';
+// import { useFavorites } from '../../FavoritesContext';
 
 const PodcastDetails = () => {
   const { id } = useParams();
   const [podcast, setPodcast] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+  // const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
   useEffect(() => {
     const fetchPodcastDetails = async () => {
@@ -47,7 +47,7 @@ const PodcastDetails = () => {
       <h1>{podcast.title}</h1>
       <img src={podcast.image} alt={podcast.title} />
       <button onClick={handleFavoriteToggle}>
-        {isFavorite(id) ? 'Remove from Favorites' : 'Add to Favorites'}
+        {/* {isFavorite(id) ? 'Remove from Favorites' : 'Add to Favorites'} */}
       </button>
       <p>{podcast.description}</p>
       

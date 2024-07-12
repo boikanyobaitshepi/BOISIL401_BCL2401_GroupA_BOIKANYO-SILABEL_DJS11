@@ -5,7 +5,7 @@ import PodcastDetails from './pages/PodcastDetail';
 import Podcasts from './pages/Podcasts';
 import Layout from './components/Layout';
 import About from './pages/About';
-import Favorites from './components/Favorites';
+// import Favorites from './components/Favorites';
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
           <Route path='podcasts/:id' element={<PodcastDetails />} />
           <Route path='/about' element={<About />} />
         {/* <Route path="/favorites" element={<Favorites/>} /> */}
-        <Route path="/favorites" component={Favorites} />
+        {/* <Route path="/favorites" component={Favorites} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
